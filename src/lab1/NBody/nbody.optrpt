@@ -1,0 +1,180 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+Intel(R) C Intel(R) 64 Compiler Classic for applications running on Intel(R) 64, Version 2021.7.0 Build 20220726_000000
+
+Compiler options: -I. -c -o nbody.o -O2 -g -qopt-report=3 -xhost
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+
+Begin optimization report for: main(const int, const char **)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (main(const int, const char **)) [1] nbody.c(24,45)
+  -> INLINE (MANUAL): (27,26) atoi(const char *)
+    -> EXTERN: /usr/include/stdlib.h:(363,16) strtol(const char *__restrict__, char **__restrict__, int)
+  -> EXTERN: (32,12) get_memory(int)
+  -> EXTERN: (34,2) randomizeBodies(body *, int)
+  -> EXTERN: (36,14) get_time()
+  -> EXTERN: (39,3) bodyForce(body *, float, int)
+  -> EXTERN: (40,3) integrate(body *, float, int)
+  -> EXTERN: (43,21) get_time()
+  -> INLINE: (44,18) solutionPos(body *, int)
+  -> EXTERN: (45,2) printf(const char *__restrict__, ...)
+  -> EXTERN: (46,2) printf(const char *__restrict__, ...)
+  -> EXTERN: (48,2) free_memory(body *)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at nbody.c(16,2) inlined into nbody.c(44,18)
+   remark #15300: LOOP WAS VECTORIZED
+   remark #26013: Compiler has chosen to target XMM/YMM vector. Try using -qopt-zmm-usage=high to override
+   remark #15452: unmasked strided loads: 6 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 61 
+   remark #15477: vector cost: 16.370 
+   remark #15478: estimated potential speedup: 3.560 
+   remark #15487: type converts: 1 
+   remark #15488: --- end vector cost summary ---
+LOOP END
+
+LOOP BEGIN at nbody.c(16,2) inlined into nbody.c(44,18)
+<Remainder loop for vectorization>
+   remark #15301: REMAINDER LOOP WAS VECTORIZED
+   remark #15452: unmasked strided loads: 6 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 61 
+   remark #15477: vector cost: 16.370 
+   remark #15478: estimated potential speedup: 3.560 
+   remark #15487: type converts: 1 
+   remark #15488: --- end vector cost summary ---
+LOOP END
+
+
+Non-optimizable loops:
+
+
+LOOP BEGIN at nbody.c(38,2)
+   remark #15543: loop was not vectorized: loop with function call not considered an optimization candidate.
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+nbody.c(24,45):remark #34051: REGISTER ALLOCATION : [main] nbody.c:24
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   63[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm31 k0-k7]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   37[ rax rdx rcx rsi rdi r8-r10 r12-r14 zmm0-zmm20 k1-k5]
+        
+    Routine temporaries
+        Total         :     133
+            Global    :      28
+            Local     :     105
+        Regenerable   :      25
+        Spilled       :       5
+        
+    Routine stack
+        Variables     :       4 bytes*
+            Reads     :       2 [1.16e-01 ~ 0.1%]
+            Writes    :       2 [1.16e-01 ~ 0.1%]
+        Spills        :      16 bytes*
+            Reads     :       2 [1.16e-01 ~ 0.1%]
+            Writes    :       2 [1.16e-01 ~ 0.1%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: atoi(const char *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+NEVER EMIT DEFINITION FUNCTION: (atoi(const char *))/usr/include/stdlib.h(362,1)
+
+===========================================================================
+
+Begin optimization report for: solutionPos(body *, int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (solutionPos(body *, int)) [3] nbody.c(12,1)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at nbody.c(16,2)
+   remark #15300: LOOP WAS VECTORIZED
+   remark #26013: Compiler has chosen to target XMM/YMM vector. Try using -qopt-zmm-usage=high to override
+   remark #15452: unmasked strided loads: 6 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 61 
+   remark #15477: vector cost: 16.370 
+   remark #15478: estimated potential speedup: 3.560 
+   remark #15487: type converts: 1 
+   remark #15488: --- end vector cost summary ---
+LOOP END
+
+LOOP BEGIN at nbody.c(16,2)
+<Remainder loop for vectorization>
+   remark #15301: REMAINDER LOOP WAS VECTORIZED
+   remark #15452: unmasked strided loads: 6 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 61 
+   remark #15477: vector cost: 16.370 
+   remark #15478: estimated potential speedup: 3.560 
+   remark #15487: type converts: 1 
+   remark #15488: --- end vector cost summary ---
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+nbody.c(12,1):remark #34051: REGISTER ALLOCATION : [solutionPos] nbody.c:12
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   63[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm31 k0-k7]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   33[ rax rdx rcx rsi rdi r8-r10 zmm0-zmm14 zmm16-zmm20 k1-k5]
+        
+    Routine temporaries
+        Total         :      90
+            Global    :      17
+            Local     :      73
+        Regenerable   :      10
+        Spilled       :       0
+        
+    Routine stack
+        Variables     :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
