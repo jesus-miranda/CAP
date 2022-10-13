@@ -12,12 +12,14 @@ void bodyForce(body *p, float dt, int n) {
 				float dx = p[j].x - p[i].x;
 				float dy = p[j].y - p[i].y;
 				float dz = p[j].z - p[i].z;
-				double softeningSquared = 1e-3;
+				//double softeningSquared = 1e-3;
+				float softeningSquared = 1e-3;
 				float distSqr = dx*dx + dy*dy + dz*dz + softeningSquared;
 				float invDist = 1.0f / sqrtf(distSqr);
 				float invDist3 = invDist * invDist * invDist;
 
-				double G = 6.674e-11;
+				//double G = 6.674e-11;
+				float G = 6.674e-11;
 				float g_masses = G * p[j].m * p[i].m;
 
 				Fx += g_masses * dx * invDist3; 
