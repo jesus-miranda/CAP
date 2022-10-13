@@ -6,6 +6,7 @@ void bodyForce(body *p, float dt, int n) {
 	for (int i = 0; i < n; i++) { 
 		float Fx = 0.0f; float Fy = 0.0f; float Fz = 0.0f;
 
+		#pragma vector alligned
 		for (int j = 0; j < n; j++) {
 			if (i!=j) {
 				float dx = p[j].x - p[i].x;
