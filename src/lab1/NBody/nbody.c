@@ -8,13 +8,13 @@
 #include "nbody_routines.h"
 
 
-double solutionPos(body *p, int n)
+double solutionPos(body p, int n)
 {
 	float pos_private = 0.0f;
 	double pos_global  = 0.0f;
 
 	for (int i = 0 ; i < n; i++) {
-		pos_private = sqrtf(p[i].x*p[i].x+p[i].y*p[i].y+p[i].z*p[i].z);
+		pos_private = sqrtf(p.x[i]*p.x[i]+p.y[i]*p.y[i]+p.z[i]*p.z[i]);
 		pos_global+=pos_private;
 	}
 	return(pos_global);
@@ -23,13 +23,23 @@ double solutionPos(body *p, int n)
 
 int main(const int argc, const char** argv) {
 
+
 	int nBodies = 1000;
 	if (argc > 1) nBodies = atoi(argv[1]);
 
 	const float dt = 0.01f; // time step
 	const int nIters = 100;  // simulation iterations
 
-	body *p = get_memory(nBodies);
+//	body *p = get_memory(nBodies);
+	
+	body p;
+	p.m = (float*)malloc(sizeof(float));
+	p.x = (float*)malloc(sizeof(float));
+	p.y = (float*)malloc(sizeof(float));
+	p.z = (float*)malloc(sizeof(float));
+	p.vx = (float*)malloc(sizeof(float));
+	p.vy = (float*)malloc(sizeof(float));
+	p.vz = (float*)malloc(sizeof(float));
 
 	randomizeBodies(p, nBodies); // Init pos / vel data
 
