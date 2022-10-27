@@ -74,6 +74,7 @@ int main(int argc, char * argv[])
 
     /* Display a few computed values */
     vcalls=vputs=0.0f;
+	#pragma vector alligned
     for (i=0; i<nopt; i++){
         vcalls+=vcall_compiler[i]/nopt;
         vputs+=vput_compiler[i]/nopt;
@@ -83,6 +84,7 @@ int main(int argc, char * argv[])
     printf("Time BlackScholesFormula_Compiler: %f sec.\n", t1-t0);
     printf("\n");
     vcalls=vputs=0.0f;
+	#pragma vector alligned
     for (i=0; i<nopt; i++){
         vcalls+=vcall_mkl[i]/nopt;
         vputs+=vput_mkl[i]/nopt;
